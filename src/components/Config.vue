@@ -30,7 +30,7 @@
         >
           <div>
             <p class="configurator__subtitle" style="text-transform: capitalize">
-              {{ shoePart }} ({{ currentPartIndex + 1 }}/6)
+              {{ shoePart }} ({{ currentPartIndex + 1 }}/6) <span v-if="shoePart === 'inside' || shoePart === 'outside'">(select a color and texture)</span>
             </p>
           </div>
           <div class="configurator__flex1">
@@ -228,7 +228,7 @@
         userAddress: null,
         userEmail: null,
         formError: null,
-        colorOptions: ["#ffd700", "#88FF00", "#00FFA6", "#A200FF"],
+        colorOptions: ["#000000", "#FFFFFF", "#00B295", "#AB2346"],
         materialOptions: [
           "/textures/leather.jpg",
           "/textures/holes.jpg",
