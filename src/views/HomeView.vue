@@ -1,9 +1,10 @@
 <script setup>
-import TheWelcome from '../components/TheWelcome.vue'
+import Configurator from '@/components/Configurator.vue';
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <canvas></canvas>
+    <Configurator></Configurator>
   </main>
 </template>
