@@ -8,3 +8,9 @@ import Configurator from '@/components/Configurator.vue';
     <Configurator></Configurator>
   </main>
 </template>
+
+<style scoped>
+canvas {
+  outline: 1px solid black;
+}
+</style>
