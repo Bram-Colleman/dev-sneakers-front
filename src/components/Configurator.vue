@@ -2,12 +2,13 @@
 import { ref, onMounted } from 'vue';
 
 const outside1 = ref(["red", "green", "blue", "purple", "yellow"]);
-const outside2 = ref(["red", "green", "blue", "purple", "yellow"]);
+const outside2 = ref(["red", "green", "blue", "purple"]);
 const laces = ref(["red", "green", "blue", "purple", "yellow"]);
-const sole1 = ref(["red", "green", "blue", "purple", "yellow"]);
+const sole1 = ref(["red", "green", "purple", "yellow"]);
 const sole2 = ref(["red", "green", "blue", "purple", "yellow"]);
 const inside = ref(["red", "green", "blue", "purple", "yellow"]);
 const categories = ref(["outside1", "outside2", "laces", "sole1", "sole2", "inside"]);
+const categoriesFull = [outside1, outside2, laces, sole1, sole2, inside];
 const current = ref(0);
 
 const cycle = (factor) => {
@@ -51,7 +52,7 @@ const c_outside1 = ref("");
         <button @click="cycle(1)">next</button>
     </div>
     <div class="colors">
-        <div v-for="c in outside1">
+        <div v-for="c in categoriesFull[current].value">
             <input type="radio" name="c_outside1" :id=c v-model="c_outside1">
             <label :for=c >{{ c }}</label>
         </div>
