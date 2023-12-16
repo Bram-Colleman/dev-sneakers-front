@@ -44,6 +44,35 @@ const c_outside1 = ref("");
 
 // }
 
+function addOrder() {
+  fetch("http://localhost:3000/api/v1/shoes", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",  
+    },
+    body: JSON.stringify({
+        "brand": "nike",
+        "outside_1Color": "red",
+        "outside_2Color": "green",
+        "lacesColor": "blue",
+        "sole_1Color": "black",
+        "sole_2Color": "white",
+        "insideColor": "yellow",
+        "size": 8,
+        "price": 8,
+        "status": "delivery"
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.status === "success") {
+        console.log("Success:", data);
+      } else {
+        console.error("Something went wrong!");
+      }
+    });
+}
+
 </script>
 <template>
     <div>
@@ -57,7 +86,7 @@ const c_outside1 = ref("");
             <label :for=c >{{ c }}</label>
         </div>
     </div>
-
+    <button @click="addOrder">Add Order</button>
 </template>
 <style scoped>
 .colors {
