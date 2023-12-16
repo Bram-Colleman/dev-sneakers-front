@@ -1,10 +1,9 @@
 <script setup>
-import Configurator from '@/components/Configurator.vue';
+import Configurator from '@/components/Config.vue';
 </script>
 
 <template>
   <main>
-    <canvas></canvas>
     <Configurator></Configurator>
   </main>
 </template>
