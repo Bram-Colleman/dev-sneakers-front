@@ -311,11 +311,9 @@
   }
   
   @media (max-width: 950px) {
-    .configurator__flex {
-      width: 100%;
-    }
     .configurator {
       gap: 0px;
+      max-width: 100vw;
     }
   
     .configurator__arrow {
