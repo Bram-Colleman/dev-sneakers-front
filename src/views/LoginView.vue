@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
 const email = ref("");
 const password = ref("");
@@ -33,6 +33,12 @@ function login() {
   }
     
 }
+
+onMounted(() => {
+  if (localStorage.getItem("token")) {
+    window.location.href = "/overview";
+  }
+});
 
 </script>
 <template>
