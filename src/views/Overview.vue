@@ -155,4 +155,19 @@ li {
 .part span {
   width: 4rem;
 }
+
+@media (max-width: 950px) {
+    li {
+      margin: 0 1rem;
+    }
+    .orders {
+      margin: 0;
+      justify-content: center;
+    }
+  }
+@media (max-width: 389px) {
+    li {
+      border-bottom: 1px solid rgb(8, 8, 8) ;
+    }
+  }
 </style>
