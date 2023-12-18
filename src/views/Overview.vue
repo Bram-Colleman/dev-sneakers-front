@@ -46,25 +46,34 @@ onMounted(() => {
           <h4>{{ order.shoeType }}</h4>
           <!-- <span>{{ order.shoeColorLaces }}</span> -->
           <div class="colors">
-            <div v-if="order.shoeColorLaces == '#FFFFFF'" style="background-color: #ffffff" class="orderColor"></div>
-            <div v-if="order.shoeColorLaces == '#000000'" style="background-color: black" class="orderColor"></div>
-            <div v-if="order.shoeColorLaces == '#FE7F00'" style="background-color: #fe7f00" class="orderColor"></div>
-            <div v-if="order.shoeColorLaces == '#69FF47'" style="background-color: #69ff47" class="orderColor"></div>
-
-            <div v-if="order.shoeColorPanelDown == '#FFFFFF'" style="background-color: #ffffff" class="orderColor"></div>
-            <div v-if="order.shoeColorPanelDown == '#000000'" style="background-color: black" class="orderColor"></div>
-            <div v-if="order.shoeColorPanelDown == '#FE7F00'" style="background-color: #fe7f00" class="orderColor"></div>
-            <div v-if="order.shoeColorPanelDown == '#69FF47'" style="background-color: #69ff47" class="orderColor"></div>
-
-            <div v-if="order.shoeColorPanelUp == '#FFFFFF'" style="background-color: #ffffff" class="orderColor"></div>
-            <div v-if="order.shoeColorPanelUp == '#000000'" style="background-color: black" class="orderColor"></div>
-            <div v-if="order.shoeColorPanelUp == '#FE7F00'" style="background-color: #fe7f00" class="orderColor"></div>
-            <div v-if="order.shoeColorPanelUp == '#69FF47'" style="background-color: #69ff47" class="orderColor"></div>
-
-            <div v-if="order.shoeColorSole == '#FFFFFF'" style="background-color: #ffffff" class="orderColor"></div>
-            <div v-if="order.shoeColorSole == '#000000'" style="background-color: black" class="orderColor"></div>
-            <div v-if="order.shoeColorSole == '#FE7F00'" style="background-color: #fe7f00" class="orderColor"></div>
-            <div v-if="order.shoeColorSole == '#69FF47'" style="background-color: #69ff47" class="orderColor"></div>
+            <div class="part">
+              <span>Laces</span>
+              <div v-if="order.shoeColorLaces == '#FFFFFF'" style="background-color: #ffffff" class="orderColor"></div>
+              <div v-if="order.shoeColorLaces == '#000000'" style="background-color: black" class="orderColor"></div>
+              <div v-if="order.shoeColorLaces == '#FE7F00'" style="background-color: #fe7f00" class="orderColor"></div>
+              <div v-if="order.shoeColorLaces == '#69FF47'" style="background-color: #69ff47" class="orderColor"></div>
+            </div>
+            <div class="part">
+              <span>Inside</span>
+              <div v-if="order.shoeColorPanelDown == '#FFFFFF'" style="background-color: #ffffff" class="orderColor"></div>
+              <div v-if="order.shoeColorPanelDown == '#000000'" style="background-color: black" class="orderColor"></div>
+              <div v-if="order.shoeColorPanelDown == '#FE7F00'" style="background-color: #fe7f00" class="orderColor"></div>
+              <div v-if="order.shoeColorPanelDown == '#69FF47'" style="background-color: #69ff47" class="orderColor"></div>
+            </div>
+            <div class="part">
+              <span>Outside</span>
+              <div v-if="order.shoeColorPanelUp == '#FFFFFF'" style="background-color: #ffffff" class="orderColor"></div>
+              <div v-if="order.shoeColorPanelUp == '#000000'" style="background-color: black" class="orderColor"></div>
+              <div v-if="order.shoeColorPanelUp == '#FE7F00'" style="background-color: #fe7f00" class="orderColor"></div>
+              <div v-if="order.shoeColorPanelUp == '#69FF47'" style="background-color: #69ff47" class="orderColor"></div>
+            </div>
+            <div class="part">
+              <span>Sole</span>
+              <div v-if="order.shoeColorSole == '#FFFFFF'" style="background-color: #ffffff" class="orderColor"></div>
+              <div v-if="order.shoeColorSole == '#000000'" style="background-color: black" class="orderColor"></div>
+              <div v-if="order.shoeColorSole == '#FE7F00'" style="background-color: #fe7f00" class="orderColor"></div>
+              <div v-if="order.shoeColorSole == '#69FF47'" style="background-color: #69ff47" class="orderColor"></div>
+            </div>
           </div>
           <p>{{ order.status }}</p>
         </li>
@@ -121,12 +130,19 @@ li {
 }
 .colors {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   padding: 0;
 }
 .orderColor {
   width: 1rem;
   height: 1rem;
+}
+.part {
+  display: flex;
+  align-items: center;
+}
+.part span {
+  width: 4rem;
 }
 </style>
