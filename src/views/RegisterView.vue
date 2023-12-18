@@ -1,18 +1,21 @@
 <script setup>
 import { ref } from "vue";
 
+const userName = ref("");
 const email = ref("");
 const password = ref("");
 const invalid = ref(false);
 
-function login() {
+function register() {
+    console.log("reg");
   try {
-    fetch("https://dev5-sneaker-api.onrender.com/api/v1/users/login", {
+    fetch("https://dev5-sneaker-api.onrender.com/api/v1/users/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+          userName: userName.value,
           email: email.value,
           password: password.value,
       }),
@@ -41,13 +44,16 @@ function login() {
   </div>
   <div class="flex">
 
-    <div class="login">
-        <h1>Log In</h1>
+    <div class="register">
+        <h1>Register</h1>
+        <div class="user-details-div">
+          <label for="userName">Username</label>
+          <input type="text" id="userName" name="userName" v-model="userName"/>
+        </div>
         <div class="user-details-div">
           <label for="email">E-mail</label>
           <input type="email" id="email" name="email" v-model="email"/>
         </div>
-        
         <div class="user-details-div">
           <label for="password">Password</label>
           <input type="password" id="password" name="password" v-model="password"/>
@@ -55,9 +61,9 @@ function login() {
   
         <span v-if="invalid" class="error">Invalid credentials</span>
   
-        <button class="login__button" type="submit" @click="login">Log In</button>
-        <span>Don't have an account?</span>
-        <router-link to="/register">Register</router-link>
+        <button class="login__button" type="submit" @click="register">Register</button>
+        <span>Already have an account?</span>
+        <router-link to="/login">Log in</router-link>
     </div>
   </div>
 </template>
@@ -84,7 +90,7 @@ function login() {
     margin-bottom: 5rem;
     margin-top: 0;
   }
-  .login {
+  .register {
     display: flex;
     flex-direction: column;
     align-items: center;

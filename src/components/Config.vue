@@ -44,6 +44,10 @@
               class="configurator__options"
               @click="updateColor(shoePart, color)"
             >
+              <div v-if="color == selectedColors"
+                class="configurator__circle"
+                :style="{ backgroundColor: color }"
+              ></div>
               <div
                 class="configurator__circle"
                 :style="{ backgroundColor: color }"
