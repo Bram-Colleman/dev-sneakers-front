@@ -219,7 +219,7 @@ import { useRouter } from "vue-router";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import TWEEN from "tween.js";
 
-const router = useRouter();
+// const router = useRouter();
 
 export default {
   setup() {},
@@ -449,40 +449,44 @@ export default {
     };
 
     Object.keys(jewelModels).forEach((jewelType) => {
-      const modelPath = `/models/pendant${jewelType}.glb`;
-      gltfLoader.load(modelPath, (gltf) => {
-        const jewelModel = gltf.scene;
-        jewelModel.scale.set(0.05, 0.05, 0.05);
-        jewelModel.rotation.x = -2;
-        jewelModel.rotation.y = 0.4;
-        jewelModel.rotation.z = -1.7;
-        jewelModel.position.copy(jewelModels[jewelType].position);
-
-        const material = new THREE.MeshStandardMaterial({
-          color: 0xffd700,
-          metalness: 1,
-          roughness: 0.3,
+      if (jewelType !== "none") {
+        const modelPath = `/models/pendant${jewelType}.glb`;
+        gltfLoader.load(modelPath, (gltf) => {
+          const jewelModel = gltf.scene;
+          jewelModel.scale.set(0.05, 0.05, 0.05);
+          jewelModel.rotation.x = -2;
+          jewelModel.rotation.y = 0.4;
+          jewelModel.rotation.z = -1.7;
+          jewelModel.position.copy(jewelModels[jewelType].position);
+  
+          const material = new THREE.MeshStandardMaterial({
+            color: 0xffd700,
+            metalness: 1,
+            roughness: 0.3,
+          });
+  
+          jewelModel.traverse((child) => {
+            if (child instanceof THREE.Mesh) {
+              child.material = material;
+            }
+          });
+  
+          jewelModel.visible = false;
+          jewelModels[jewelType].model = jewelModel;
+          shoeGroup.add(jewelModel);
         });
-
-        jewelModel.traverse((child) => {
-          if (child instanceof THREE.Mesh) {
-            child.material = material;
-          }
-        });
-
-        jewelModel.visible = false;
-        jewelModels[jewelType].model = jewelModel;
-        shoeGroup.add(jewelModel);
-      });
+      }
     });
 
     const updateJewel = (jewelType) => {
-      handleProgress("jewel");
-      Object.keys(jewelModels).forEach((type) => {
-        const model = jewelModels[type].model;
-        model.visible = type === jewelType;
-        if (type === jewelType) this.jewel = jewelType;
-      });
+        handleProgress("jewel");
+        Object.keys(jewelModels).forEach((type) => {
+          if (jewelModels[type].model) {
+            const model = jewelModels[type].model;
+            model.visible = type === jewelType;
+            if (type === jewelType) this.jewel = jewelType;
+          }
+        });
     };
 
     this.updateJewel = updateJewel;
@@ -684,67 +688,30 @@ export default {
       }
 
       if (this.progbarValue === this.progbarMax && !this.progressState) {
-        onProgressComplete();
         this.progressState = true;
       }
     };
 
     this.handleProgress = handleProgress;
 
-    const onProgressComplete = () => {
-      const particleGeometry = new THREE.BufferGeometry();
-      const count = 400;
-      const spreadDistance = 10;
-
-      let vertices = new Float32Array(count * 3);
-      for (let i = 0; i < count * 3; i++) {
-        vertices[i] = THREE.MathUtils.randFloatSpread(1);
-      }
-      particleGeometry.setAttribute(
-        "position",
-        new THREE.BufferAttribute(vertices, 3)
-      );
-
-      const animateConfetti = () => {
-        const elapsedTime = clock.getElapsedTime();
-        const speedFactor = 0.01;
-
-        for (let i = 0; i < count; i++) {
-          const i3 = i * 3;
-
-          const x = particleGeometry.attributes.position.array[i3];
-          const y = particleGeometry.attributes.position.array[i3 + 1];
-          const z = particleGeometry.attributes.position.array[i3 + 2];
-
-          particleGeometry.attributes.position.array[i3] = x + x * speedFactor;
-          particleGeometry.attributes.position.array[i3 + 1] =
-            y + y * speedFactor + Math.sin(elapsedTime * 2 + i) * 0.01;
-          particleGeometry.attributes.position.array[i3 + 2] =
-            z + z * speedFactor + Math.cos(elapsedTime * 2 + i) * 0.01;
-
-          if (particleGeometry.attributes.position.array[i3 + 1] > 3) {
-            particleGeometry.attributes.position.array[i3 + 1] =
-              -spreadDistance;
-          }
-        }
-
-        particleGeometry.attributes.position.needsUpdate = true;
-
-        renderer.render(scene, camera);
-
-        requestAnimationFrame(animateConfetti);
-      };
-
-      // animateConfetti();
-
-      setTimeout(() => {
-        scene.remove(particles);
-      }, 7000);
-    };
-
-    this.onProgressComplete = onProgressComplete;
-
     scene.add(shoeGroup);
+
+    fetch("http://localhost:3000/api/v1/users", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === "success") {
+            this.userName = data.data[0].userName;
+            this.userEmail = data.data[0].email;
+          } else {
+            console.error("Something went wrong!");
+          }
+        });
   },
 
   methods: {
@@ -782,7 +749,6 @@ export default {
     },
 
     fetchData() {
-      console.log("hier doe je de API dinges");
       if (this.initialsState === false) {
         this.initials = "";
       }
@@ -820,7 +786,7 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           if (data.status === "success") {
-            console.log("Success:", data);
+            window.location.href = "/overview";
           } else {
             console.error("Something went wrong!");
           }
