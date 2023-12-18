@@ -202,6 +202,7 @@
     <div v-if="formError" class="configurator__error-message">
       {{ formError }}
     </div>
+    <span v-if="orderConfirmed" class="configurator__complete-message">Your order has been sent!</span>
     <button v-if="progressState" @click="handleDoneButtonClick">
       Send order!
     </button>
@@ -241,6 +242,7 @@ export default {
         shoeMaterialPanelUp: null,
         shoeMaterialPanelDown: null,
       },
+      orderConfirmed: false,
       shoeSize: null,
       jewel: null,
       userName: null,
@@ -786,7 +788,11 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           if (data.status === "success") {
-            window.location.href = "/overview";
+            if (localStorage.getItem("token")) {
+              window.location.href = "/overview";
+            } else {
+              this.orderConfirmed = true;
+            }
           } else {
             console.error("Something went wrong!");
           }
