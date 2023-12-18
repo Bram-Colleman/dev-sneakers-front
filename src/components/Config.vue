@@ -243,7 +243,7 @@ export default {
       userAddress: null,
       userEmail: null,
       formError: null,
-      colorOptions: ["#000000", "#FFFFFF", "#00B295", "#AB2346"],
+      colorOptions: ["#000000", "#FFFFFF", "#FE7F00", "#69FF47"],
       materialOptions: [
         "/textures/leather.jpg",
         "/textures/holes.jpg",
