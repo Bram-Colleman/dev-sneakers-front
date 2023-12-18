@@ -30,11 +30,19 @@ function getOrders() {
 onMounted(() => {
   getOrders();
 });
+
+let logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userName");
+    window.location.href = "/";
+    };
+
 </script>
 
 <template>
   <div class="nav">
     <router-link to="/">Configurator</router-link>
+    <RouterLink class="logout" to="/logout" @click="logout">Logout</RouterLink>
   </div>
 
   <h1 class="name">Hi, {{ userName }}</h1>
@@ -89,7 +97,9 @@ onMounted(() => {
   padding: 0 2rem;
   background-color: #69ff47;
 }
-
+.logout {
+  margin-left: 1rem;
+}
 .name {
   display: flex;
   justify-content: center;
