@@ -82,13 +82,21 @@
             class="configurator__options"
             @click="updateJewel(jewelType)"
           >
-            <div
+            <div v-if="jewelType !== 'none'"
               class="configurator__circle"
               :style="{
                 backgroundImage: `url('/media/${jewelType.toLowerCase()}.jpg')`,
                 backgroundSize: 'contain',
                 backgroundRepeat: 'no-repeat',
               }"
+            ></div>
+            <div v-else
+              class="configurator__circle"
+                :style="{
+                  backgroundImage: `url('/media/none.png')`,
+                  backgroundSize: 'contain',
+                  backgroundRepeat: 'no-repeat',
+                }"
             ></div>
           </div>
         </div>
@@ -109,6 +117,15 @@
             @change="initialOn"
           />
           <label for="inital-yes">yes</label>
+          <div class="user-details-div" v-if="initialsState">
+            <label for="initals">Initials</label>
+            <input
+            id="initials"
+              v-model="initials"
+              @input="handleInitialsInput"
+              maxlength="2"
+            />
+          </div>
           <input
             class="configurator__checkbox"
             type="radio"
@@ -117,11 +134,6 @@
             @change="initialOff"
           />
           <label for="inital-no">no</label>
-          <input
-            v-model="initials"
-            @input="handleInitialsInput"
-            maxlength="2"
-          />
         </div>
       </div>
 
@@ -142,7 +154,7 @@
     </div>
 
     <button v-if="progressState" class="configurator__button" @click="goToInfo">
-      I'm finished!
+      Next
     </button>
 
     <h2 class="user-details__title" v-if="progressState" ref="infoSection">
@@ -150,7 +162,7 @@
     </h2>
     <div v-if="progressState" class="user-details">
       <div class="user-details-div">
-        <label for="shoeSize">Shoe Size:</label>
+        <label for="shoeSize">Shoe Size</label>
         <select id="shoeSize" name="shoeSize" v-model="shoeSize">
           <option value="36">36</option>
           <option value="37">37</option>
@@ -170,15 +182,15 @@
         </select>
       </div>
       <div class="user-details-div">
-        <label for="userName">Your name:</label>
+        <label for="userName">Name</label>
         <input type="text" v-model="userName" />
       </div>
       <div class="user-details-div">
-        <label for="userAddress">Your address:</label>
+        <label for="userAddress">Address</label>
         <input type="text" v-model="userAddress" />
       </div>
       <div class="user-details-div">
-        <label for="userEmail">Your email:</label>
+        <label for="userEmail">Email</label>
         <input type="email" v-model="userEmail" />
       </div>
     </div>
@@ -238,7 +250,7 @@ export default {
         "/textures/latex.jpg",
         "/textures/fabric.jpg",
       ],
-      jewelOptions: ["Giraffe", "Elephant", "Hedgehog", "Whale"],
+      jewelOptions: ["Giraffe", "Elephant", "Hedgehog", "Whale", "none"],
       progbarValue: 0,
       progbarMax: 8,
       progressState: false,
@@ -429,6 +441,7 @@ export default {
       Elephant: { model: null, position: new THREE.Vector3(-1.2, 1.2, -1.25) },
       Hedgehog: { model: null, position: new THREE.Vector3(-1.15, 1.4, -1.3) },
       Whale: { model: null, position: new THREE.Vector3(-1, 1.5, -1.25) },
+      none: { model: null, position: new THREE.Vector3(-1, 1.5, -1.25) },
     };
 
     Object.keys(jewelModels).forEach((jewelType) => {

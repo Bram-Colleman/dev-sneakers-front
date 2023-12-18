@@ -35,45 +35,56 @@
     font-weight: 400;
     font-size: 18px;
     color: var(--color-accent);
-    width: 7rem;
+    /* width: 7rem; */
   }
   
   button {
     color: var(--color-primary);
     background-color: var(--color-accent);
-    width: 60%;
-    max-width: 300px;
-    height: 5rem;
+    height: 3rem;
     font-size: 1.5rem;
     font-style: normal;
-    font-weight: bold;
     line-height: normal;
     display: block;
     margin: auto;
     margin-top: 40px;
     margin-bottom: 80px;
+    padding: 0 2rem;
     outline: none;
     border: none;
     border-radius: 2.5rem;
+    box-sizing: border-box;
+    border: 2px solid var(--color-accent);
+    transition: .4s;
+  }
+  button:hover {
+    cursor: pointer;
+    background-color: var(--color-primary);
+    color: var(--color-accent);
+    transition: .4s;
   }
   
   input,
-  select {
-    border: 2px solid var(--color-accent);
+  select#shoeSize {
+    box-sizing: border-box;
+    border: none !important;
+    outline: none !important;
+    border-bottom: 1px solid rgb(207, 207, 207) !important;
     background-color: var(--color-primary);
     color: var(--color-accent);
-    height: 20px;
     width: 15rem;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     padding: 5px;
-    border-radius: 5px;
+    transition: .2s;
   }
-  
-  select {
-    height: 30px;
+  input:hover, input:focus,
+  select:hover, select:focus {
+    border-bottom: 1px solid var(--color-accent) !important;
+    transition: .2s;
   }
+
   
   h2 {
     color: var(--color-accent);
@@ -125,7 +136,6 @@
     max-width: 150px;
     height: 3rem;
     font-size: 16px;
-    font-weight: 900;
     line-height: normal;
     margin: 0;
     margin-right: 10px;
@@ -133,6 +143,14 @@
     outline: none;
     border: none;
     border-radius: 1.5rem;
+    box-sizing: border-box;
+    border: 2px solid var(--color-accent);
+  }
+  .configurator__button:hover {
+    cursor: pointer;
+    background-color: var(--color-primary);
+    color: var(--color-accent);
+    transition: .4s;
   }
   
   .configurator__error-message {
@@ -178,9 +196,12 @@
   .configurator__initials-container {
     display: flex;
     flex-direction: row;
-    align-items: start;
+    align-items: center;
     gap: 20px;
     margin-top: 20px;
+  }
+  #initials {
+    width: 5rem ;
   }
   
   .configurator__flex1 {
@@ -197,17 +218,21 @@
     background-color: #242424;
     color: white;
     width: 20px;
-    margin-left: 15px;
-    margin-top: 5px;
+    height: 100%;
+    margin: 0;
+  }
+  .configurator__checkbox[value="true"] {
+    cursor: pointer;
+    color: red;
   }
   
   .user-details {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     align-items: center;
     align-content: flex-start;
     justify-content: space-between;
-    margin-left: 100px;
+    margin:  0 10rem;
     margin-bottom: 20px;
     gap: 40px;
     flex-wrap: wrap;
@@ -215,30 +240,43 @@
   
   .user-details-div {
     display: flex;
-    flex-direction: row;
-    gap: 10px;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .user-details-div label {
+    font-size: 14px;
+    line-height: 5px;
+    color: var(--color-accent);
+    opacity: 0.6;
+    padding-left: 5px;
+  
+  }
+
+  #shoeSize {
+    border: none;
+    outline: none;
   }
   
   .progbar {
     width: 100%;
-    height: .75rem;
+    height: 1.25rem;
     margin: 0;
     background-color: #ffffff;
   }
   
   progress[value]::-webkit-progress-value {
-    background-color: rgb(0, 19, 25);
+    background-color: #69FF47;
     transition: .7s;
 
   }
   progress[value]::-moz-progress-bar {
-    background-color: rgb(0, 19, 25);
+    background-color: #69FF47;
     transition: .7s;
 
   }
   progress::-webkit-progress-bar {
     background-color: #b0b0b0; width: 100%;
-    margin: -.8rem 0;
+    margin: 0;
     width: 100vw;
   }
   
@@ -311,6 +349,7 @@
       font-size: 12px;
       margin-right: 10px;
       margin-bottom: 10px;
+      padding: 0;
     }
   }
   
