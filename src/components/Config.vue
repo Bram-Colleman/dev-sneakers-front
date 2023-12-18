@@ -254,7 +254,7 @@ export default {
 
     const scene = new THREE.Scene();
     scene.background = new THREE.CubeTextureLoader()
-      .setPath("/cubemap/golf/")
+      .setPath("/cubemap/abandoned/")
       .load(["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"]);
 
     const camera = new THREE.PerspectiveCamera(75, ratio, 0.1, 1000);
@@ -315,25 +315,6 @@ export default {
     scene.add(directionalLight2);
     scene.add(directionalLight3);
     scene.add(directionalLight4);
-
-    gltfLoader.load("/models/shoePlatform.glb", (gltf) => {
-      const shoePlatform = gltf.scene;
-      shoePlatform.scale.set(2.5, 2.5, 2.5);
-      shoePlatform.position.z = -1;
-      shoePlatform.position.y = -5;
-      shoePlatform.position.x = -0.5;
-      shoePlatform.traverse((child) => {
-        if (child instanceof THREE.Mesh) {
-          child.material = new THREE.MeshStandardMaterial({
-            color: 0xffffff,
-            metalness: 1,
-            roughness: 0,
-            envMap: scene.background,
-          });
-        }
-      });
-      scene.add(shoePlatform);
-    });
 
     let shoeGroup = new THREE.Group();
     shoeGroup.rotation.order = "YXZ";
@@ -707,19 +688,6 @@ export default {
         new THREE.BufferAttribute(vertices, 3)
       );
 
-      const particleMaterial = new THREE.PointsMaterial({
-        size: 0.5,
-        transparent: true,
-        opacity: 1,
-        map: this.textureLoader.load("/particle/flower.png"),
-        alphaTest: 0.001,
-        transparent: true,
-        depthWrite: false,
-      });
-
-      const particles = new THREE.Points(particleGeometry, particleMaterial);
-      scene.add(particles);
-
       const animateConfetti = () => {
         const elapsedTime = clock.getElapsedTime();
         const speedFactor = 0.01;
@@ -750,7 +718,7 @@ export default {
         requestAnimationFrame(animateConfetti);
       };
 
-      animateConfetti();
+      // animateConfetti();
 
       setTimeout(() => {
         scene.remove(particles);
