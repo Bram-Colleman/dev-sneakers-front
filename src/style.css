@@ -101,7 +101,7 @@
   .configurator {
     display: flex;
     padding-bottom: 10px;
-    justify-content: space-between;
+    justify-content: center;
     margin: 0 2rem;
   }
   
@@ -112,6 +112,8 @@
     font-size: 32px;
     font-weight: 700;
     margin-top: 5px;
+    user-select: none;
+
   }
   .configurator__arrow:hover {
     cursor: pointer;
@@ -168,6 +170,7 @@
     justify-content: space-around;
     margin-bottom: 20px;
     flex-wrap: wrap;
+    width: 50rem;
   }
   
   .configurator__flex2 {
@@ -312,6 +315,8 @@
   
     .configurator__subtitle {
       font-size: 20px;
+      width: 25rem;
+      text-align: center;
     }
   
     .configurator__flex2 {
