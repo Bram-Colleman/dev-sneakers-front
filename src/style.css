@@ -390,7 +390,7 @@
   
     .user-details-div input,
     .user-details-div select {
-      width: 100px;
+      width: 80vw;
     }
   }
   
