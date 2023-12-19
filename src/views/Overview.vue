@@ -191,7 +191,7 @@ li {
   flex-direction: column;
   flex-grow: 1;
   flex-basis: 16%;
-
+  max-width: 18rem;
 }
 .colors {
   display: flex;
