@@ -120,6 +120,7 @@ let logout = () => {
 <template>
   <div class="nav">
     <router-link to="/">Configurator</router-link>
+    <RouterLink class="logout" to="/settings" >Settings</RouterLink>
     <RouterLink class="logout" to="/" @click="logout">Logout</RouterLink>
   </div>
   <h1 class="name">Hi, {{ userName }}</h1>
@@ -144,7 +145,7 @@ let logout = () => {
   background-color: #69ff47;
 }
 .logout {
-  margin-left: 1rem;
+  margin-left: 3rem;
 }
 .name {
   display: flex;
