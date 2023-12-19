@@ -31,8 +31,8 @@
         <div>
           <p class="configurator__subtitle" style="text-transform: capitalize">
             {{ shoePart }} ({{ currentPartIndex + 1 }}/6)
-            <span v-if="shoePart === 'inside' || shoePart === 'outside'"
-              >(select a color and texture)</span
+            <span v-if="shoePart === 'inside' || shoePart === 'outside'" ><br>
+              (select a color and texture)</span
             >
           </p>
         </div>
