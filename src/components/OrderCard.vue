@@ -18,15 +18,6 @@ let socket = Primus.connect("https://dev5-sneaker-api.onrender.com/", {
   },
 });
 
-socket.on("data", (data) => {
-  if (data.action === "update") {
-    // props.order.status = data.data.status;
-    emits('updateShoe');
-    return;
-  }
-
-});
-
 
 function updateStatusOrder(id) {
     try {
@@ -47,9 +38,6 @@ function updateStatusOrder(id) {
             props.order.status = statusSelected.value;
             socket.write({
               "action": "update",
-              data: {
-                status: statusSelected.value,
-              },
             });
             console.log(props.order.status);
             isEdit.value = false;
