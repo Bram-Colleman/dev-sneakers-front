@@ -5,19 +5,10 @@ const props = defineProps({
     order: Object,
     admin: Boolean
 });
-const emits = defineEmits(['deleteShoe', 'updateShoe']);
+const emit = defineEmits(['deleteShoe', 'updateShoe']);
 
 const isEdit = ref(false);
 const statusSelected = ref("");
-
-let socket = Primus.connect("https://dev5-sneaker-api.onrender.com/", {
-  reconnect: {
-    max: Infinity, // Number: The max delay before we try to reconnect.
-    min: 500, // Number: The minimum delay before we try reconnect.
-    retries: 10, // Number: How many times we should try to reconnect.
-  },
-});
-
 
 function updateStatusOrder(id) {
     try {
@@ -36,9 +27,7 @@ function updateStatusOrder(id) {
           if (data.status === "success") {
             console.log(props.order.status);
             props.order.status = statusSelected.value;
-            socket.write({
-              "action": "update",
-            });
+            emit('updateShoe');
             console.log(props.order.status);
             isEdit.value = false;
           } else {

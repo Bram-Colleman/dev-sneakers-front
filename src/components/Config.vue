@@ -789,16 +789,16 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           if (data.status === "success") {
-            let socket = Primus.connect("https://dev5-sneaker-api.onrender.com/", {
-              reconnect: {
-              max: Infinity, // Number: The max delay before we try to reconnect.
-              min: 500, // Number: The minimum delay before we try reconnect.
-              retries: 10, // Number: How many times we should try to reconnect.
-              },
-            });
-            socket.write({
-              "action": "create",
-            });
+            // let socket = Primus.connect("https://dev5-sneaker-api.onrender.com/", {
+            //   reconnect: {
+            //   max: Infinity, // Number: The max delay before we try to reconnect.
+            //   min: 500, // Number: The minimum delay before we try reconnect.
+            //   retries: 10, // Number: How many times we should try to reconnect.
+            //   },
+            // });
+            // socket.write({
+            //   "action": "create",
+            // });
             if (localStorage.getItem("token")) {
               window.location.href = "/overview";
             } else {

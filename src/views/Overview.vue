@@ -20,14 +20,8 @@ let socket = Primus.connect("https://dev5-sneaker-api.onrender.com/", {
 });
 
 socket.on("data", (data) => {
-  if (data.action === "delete") {
     getOrders();
     return;
-  }
-  if (data.action === "create") {
-    getOrders();
-    return;
-  }
 });
 
 function getInfo() {
@@ -105,8 +99,10 @@ function toggleStatusEdit() {
   statusEdit.value = !statusEdit.value;
 }
  function update() {
-  getOrders();
- }
+  socket.write({
+    "action": "update",
+  });
+}
 
 onMounted(() => {
   getInfo();
