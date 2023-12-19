@@ -72,6 +72,11 @@ onMounted(() => {
   }
 });
 
+let logout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("userName");
+};
+
 </script>
 <template>
     <div class="nav">

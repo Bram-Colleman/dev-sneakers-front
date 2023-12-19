@@ -110,10 +110,9 @@ onMounted(() => {
 });
 
 let logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userName");
-    window.location.href = "/";
-    };
+  localStorage.removeItem("token");
+  localStorage.removeItem("userName");
+};
 
 </script>
 
