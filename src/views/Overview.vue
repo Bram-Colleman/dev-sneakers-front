@@ -24,6 +24,7 @@ socket.on("data", (data) => {
     getOrders();
   }
   if (data.action === "create") {
+    console.log("create");
     getOrders();
   }
 });
