@@ -120,6 +120,7 @@ onMounted(() => {
                     <option value="Order placed">Order placed</option>
                     <option value="In progress">In progress</option>
                     <option value="Sent">Sent</option>
+                    <option value="Canceled">Canceled</option>
                 </select>
             </div>
         </div>

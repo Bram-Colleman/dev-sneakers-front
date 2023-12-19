@@ -9,7 +9,7 @@ let userEmail = "";
 let isAdmin = "";
 let statusEdit = ref(false);
 let statusSelected = ref("");
-const orders = ref();
+const orders = ref([]);
 
 let socket = Primus.connect("http://localhost:3000/", {
   reconnect: {
@@ -124,14 +124,13 @@ let logout = () => {
     <router-link to="/">Configurator</router-link>
     <RouterLink class="logout" to="/" @click="logout">Logout</RouterLink>
   </div>
-
   <h1 class="name">Hi, {{ userName }}</h1>
   <div class="overview__item">
-    <h1 v-if="isAdmin">All Orders</h1>
-    <h1 v-else>My Orders</h1>
+    <h1 v-if="isAdmin">All Orders ({{ Object.keys(orders).length }})</h1>
+    <h1 v-else>My Orders ({{ Object.keys(orders).length }})</h1>
     <div class="order_list">
       <ul class="orders">
-        <li v-for="(order, index) in orders" :key="order" :order="order" :index="index" :edit="false">
+        <li v-for="(order, index) in orders" :key="order" :order="order" :index="index" :edit="false" v-if="orders">
           <OrderCard :order="order" :admin="isAdmin" @deleteShoe="deleteShoe(order._id)" @updateShoe="update"></OrderCard>
         </li>
       </ul>
@@ -184,13 +183,13 @@ a {
   padding: 0;
   margin: 0 10rem;
   gap: 3rem;
+  flex-grow: 1;
 }
 li {
   margin: 0 2rem;
   display: flex;
   flex-direction: column;
-  width: 15%;
-  flex-grow: 0;
+  flex-grow: 1;
   flex-basis: 16%;
 
 }
