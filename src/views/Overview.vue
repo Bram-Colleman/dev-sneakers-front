@@ -16,8 +16,7 @@ function getOrders() {
       .then((response) => response.json())
       .then((data) => {
         if (data.status === "success") {
-          orders.value = data.data;
-          console.log(orders.value);
+          orders.value = data.data.reverse();
         } else {
           console.log("error");
         }
