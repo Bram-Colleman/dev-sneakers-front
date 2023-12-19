@@ -21,11 +21,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-#logo {
-  position: absolute;
-  margin: 1rem 5rem;
-  filter: invert(1);
-}
+
 canvas {
   outline: 1px solid black;
 }
