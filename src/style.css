@@ -115,11 +115,12 @@
   
   .configurator__arrow {
     color: var(--color-accent);
-    margin-top: 0;
     margin-bottom: 10px;
     font-size: 32px;
     font-weight: 700;
     margin-top: 5px;
+    margin-left: 0px;
+    margin-right: 0px;
     user-select: none;
 
   }
@@ -133,6 +134,7 @@
     font-style: normal;
     margin-top: 15px;
     margin-bottom: 5px;
+    text-align: center;
   }
   
   .configurator__button {
@@ -362,16 +364,13 @@
   
     .configurator__flex1 {
       gap: 20px;
+      justify-content: center;
     }
     .configurator__button {
       width: 100px;
       font-size: 12px;
       margin-right: 10px;
       margin-bottom: 10px;
-    }
-
-    .configurator__flex1{
-      justify-content: center;
     }
   }
   
@@ -384,7 +383,7 @@
       margin-bottom: 10px;
       padding: 0;
     }
-    
+
     #logo {
       width: 8rem;
       margin: 1rem 1rem;
@@ -418,6 +417,11 @@
     .user-details-div select {
       width: 80vw;
     }
+
+    .configurator__arrow{
+      margin-left: 20px;
+      margin-right: 20px;
+    }
   }
   
   @media (max-width: 400px) {
@@ -436,6 +440,11 @@
       height: 50px;
       font-size: 16px;
       margin-top: 50px;
+    }
+
+    .configurator__arrow{
+      margin-left: 0px;
+      margin-right: 0px;
     }
   }
   
