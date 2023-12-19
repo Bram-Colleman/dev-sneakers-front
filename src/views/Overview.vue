@@ -1,5 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
+import OrderCard from "@/components/OrderCard.vue";
+
 
 let userName = localStorage.getItem("userName");
 let userEmail = "";
@@ -75,30 +77,7 @@ function deleteShoe(id) {
     }
   }
 
-  function updateStatusOrder(id) {
-    try {
-      fetch(`http://localhost:3000/api/v1/shoes/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({
-          status: statusSelected.value,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.status === "success") {
-            getOrders();
-          } else {
-            console.log(data);
-          }
-        });
-    } catch (error) {
-      console.log(error);
-    }
-}
+
 function toggleStatusEdit() {
   statusEdit.value = !statusEdit.value;
 }
@@ -125,51 +104,12 @@ let logout = () => {
 
   <h1 class="name">Hi, {{ userName }}</h1>
   <div class="overview__item">
-    <h1>My Orders</h1><span class="status__edit" @click="toggleStatusEdit" v-if="isAdmin">edit</span>
+    <h1 v-if="isAdmin">All Orders</h1>
+    <h1 v-else>My Orders</h1>
     <div class="order_list">
       <ul class="orders">
-        <li v-for="order in orders">
-          <h4>{{ order.shoeType }}</h4>
-          <!-- <span>{{ order.shoeColorLaces }}</span> -->
-          <div class="colors">
-            <div class="part">
-              <span>Laces</span>
-              <div v-if="order.shoeColorLaces == '#FFFFFF'" style="background-color: #ffffff" class="orderColor"></div>
-              <div v-if="order.shoeColorLaces == '#000000'" style="background-color: black" class="orderColor"></div>
-              <div v-if="order.shoeColorLaces == '#FE7F00'" style="background-color: #fe7f00" class="orderColor"></div>
-              <div v-if="order.shoeColorLaces == '#69FF47'" style="background-color: #69ff47" class="orderColor"></div>
-            </div>
-            <div class="part">
-              <span>Inside</span>
-              <div v-if="order.shoeColorPanelDown == '#FFFFFF'" style="background-color: #ffffff" class="orderColor"></div>
-              <div v-if="order.shoeColorPanelDown == '#000000'" style="background-color: black" class="orderColor"></div>
-              <div v-if="order.shoeColorPanelDown == '#FE7F00'" style="background-color: #fe7f00" class="orderColor"></div>
-              <div v-if="order.shoeColorPanelDown == '#69FF47'" style="background-color: #69ff47" class="orderColor"></div>
-            </div>
-            <div class="part">
-              <span>Outside</span>
-              <div v-if="order.shoeColorPanelUp == '#FFFFFF'" style="background-color: #ffffff" class="orderColor"></div>
-              <div v-if="order.shoeColorPanelUp == '#000000'" style="background-color: black" class="orderColor"></div>
-              <div v-if="order.shoeColorPanelUp == '#FE7F00'" style="background-color: #fe7f00" class="orderColor"></div>
-              <div v-if="order.shoeColorPanelUp == '#69FF47'" style="background-color: #69ff47" class="orderColor"></div>
-            </div>
-            <div class="part">
-              <span>Sole</span>
-              <div v-if="order.shoeColorSole == '#FFFFFF'" style="background-color: #ffffff" class="orderColor"></div>
-              <div v-if="order.shoeColorSole == '#000000'" style="background-color: black" class="orderColor"></div>
-              <div v-if="order.shoeColorSole == '#FE7F00'" style="background-color: #fe7f00" class="orderColor"></div>
-              <div v-if="order.shoeColorSole == '#69FF47'" style="background-color: #69ff47" class="orderColor"></div>
-            </div>
-          </div>
-          <p class="status">{{ order.status }}</p>
-          <div v-if="statusEdit">
-            <select name="" id="" class="status__select" v-model="statusSelected">
-              <option value="Sent">Sent</option>
-              <option value="In progress">In progress</option>
-            </select>
-            <span @click="updateStatusOrder(order._id)">confirm</span>
-            <button @click="deleteShoe(order._id)" v-if="isAdmin">Delete</button>
-          </div>
+        <li v-for="(order, index) in orders" :key="order._id" :order="order" :index="index" :edit="false">
+          <OrderCard :order="order" :admin="isAdmin" @deleteShoe="deleteShoe(order._id)"></OrderCard>
         </li>
       </ul>
     </div>
@@ -217,12 +157,19 @@ a {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: space-between;
   padding: 0;
   margin: 0 10rem;
+  gap: 3rem;
 }
 li {
-  margin: 0 2.5rem;
+  margin: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  width: 15%;
+  flex-grow: 0;
+  flex-basis: 16%;
+
 }
 .colors {
   display: flex;
