@@ -97,7 +97,6 @@ function register() {
     justify-content: center;
     margin: 0 auto;
     width: 100%;
-    height: 100%;
     margin-bottom: 5rem;
     flex-grow: 1; 
 
