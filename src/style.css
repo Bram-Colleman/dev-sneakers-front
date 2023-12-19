@@ -345,12 +345,13 @@
     .configurator__flex2 {
       gap: 20px;
     }
-  
+
+
     .configurator__options .configurator__circle {
       width: 30px;
       height: 30px;
     }
-  
+
     .configurator__initials-container {
       gap: 10px;
     }
@@ -368,6 +369,10 @@
       margin-right: 10px;
       margin-bottom: 10px;
     }
+
+    .configurator__flex1{
+      justify-content: center;
+    }
   }
   
   @media (max-width: 700px) {
@@ -379,7 +384,7 @@
       margin-bottom: 10px;
       padding: 0;
     }
-
+    
     #logo {
       width: 8rem;
       margin: 1rem 1rem;
