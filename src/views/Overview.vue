@@ -11,7 +11,7 @@ let statusEdit = ref(false);
 let statusSelected = ref("");
 const orders = ref([]);
 
-let socket = Primus.connect("http://localhost:3000/", {
+let socket = Primus.connect("https://dev5-sneaker-api.onrender.com/", {
   reconnect: {
     max: Infinity, // Number: The max delay before we try to reconnect.
     min: 500, // Number: The minimum delay before we try reconnect.
@@ -30,7 +30,7 @@ socket.on("data", (data) => {
 
 function getInfo() {
   try {
-  fetch("http://localhost:3000/api/v1/users", {
+  fetch("https://dev5-sneaker-api.onrender.com/api/v1/users", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

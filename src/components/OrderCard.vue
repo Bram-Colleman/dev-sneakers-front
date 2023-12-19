@@ -10,7 +10,7 @@ const emits = defineEmits(['deleteShoe', 'updateShoe']);
 const isEdit = ref(false);
 const statusSelected = ref("");
 
-let socket = Primus.connect("http://localhost:3000/", {
+let socket = Primus.connect("https://dev5-sneaker-api.onrender.com/", {
   reconnect: {
     max: Infinity, // Number: The max delay before we try to reconnect.
     min: 500, // Number: The minimum delay before we try reconnect.
@@ -29,7 +29,7 @@ socket.on("data", (data) => {
 
 function updateStatusOrder(id) {
     try {
-      fetch(`http://localhost:3000/api/v1/shoes/${id}`, {
+      fetch(`https://dev5-sneaker-api.onrender.com/api/v1/shoes/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
