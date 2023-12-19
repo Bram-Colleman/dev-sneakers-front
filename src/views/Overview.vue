@@ -2,7 +2,32 @@
 import { ref, onMounted } from "vue";
 
 let userName = localStorage.getItem("userName");
+let userEmail = "";
+let isAdmin = "";
 const orders = ref();
+function getInfo() {
+  try {
+  fetch("http://localhost:3000/api/v1/users", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === "success") {
+            userName = data.data[0].userName;
+            userEmail = data.data[0].email;
+            isAdmin = data.data[0].isAdmin;
+          } else {
+            console.error("Something went wrong!");
+          }
+        });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 function getOrders() {
   try {
@@ -49,6 +74,7 @@ function deleteShoe(id) {
   }
 
 onMounted(() => {
+  getInfo();
   getOrders();
 });
 
@@ -106,7 +132,7 @@ let logout = () => {
           </div>
           <p>{{ order.status }}</p>
 
-            <button @click="deleteShoe(order._id)">Delete</button>
+            <button @click="deleteShoe(order._id)" v-if="isAdmin">Delete</button>
         </li>
       </ul>
     </div>
