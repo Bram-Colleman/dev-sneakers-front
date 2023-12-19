@@ -5,10 +5,26 @@ const props = defineProps({
     order: Object,
     admin: Boolean
 });
-const emits = defineEmits(['deleteShoe']);
+const emits = defineEmits(['deleteShoe', 'updateShoe']);
 
 const isEdit = ref(false);
 const statusSelected = ref("");
+
+let socket = Primus.connect("http://localhost:3000/", {
+  reconnect: {
+    max: Infinity, // Number: The max delay before we try to reconnect.
+    min: 500, // Number: The minimum delay before we try reconnect.
+    retries: 10, // Number: How many times we should try to reconnect.
+  },
+});
+
+socket.on("data", (data) => {
+  if (data.action === "update") {
+    // props.order.status = data.data.status;
+    emits('updateShoe');
+  }
+
+});
 
 
 function updateStatusOrder(id) {
@@ -26,7 +42,15 @@ function updateStatusOrder(id) {
         .then((response) => response.json())
         .then((data) => {
           if (data.status === "success") {
+            console.log(props.order.status);
             props.order.status = statusSelected.value;
+            socket.write({
+              "action": "update",
+              data: {
+                status: statusSelected.value,
+              },
+            });
+            console.log(props.order.status);
             isEdit.value = false;
           } else {
             console.log(data);
@@ -90,7 +114,7 @@ onMounted(() => {
           <span class="part"><strong>Address: </strong>{{order.userAddress}}</span>
           <div class="order__status">
               <span><strong>Status: </strong></span>
-              <span v-if="!isEdit">{{order.status}}</span>
+              <span v-if="!isEdit">{{ props.order.status }}</span>
               <div v-if="isEdit">
                 <select name="" id="" class="status__select" v-model="statusSelected">
                     <option value="Order placed">Order placed</option>
@@ -99,7 +123,7 @@ onMounted(() => {
                 </select>
             </div>
         </div>
-        <button @click="updateStatusOrder(order._id)" v-if="isEdit" class="button button--confirm">Confirm</button>
+        <button @click="updateStatusOrder(props.order._id)" v-if="isEdit" class="button button--confirm">Confirm</button>
         <button @click="$emit('deleteShoe')" v-if="isEdit" class="button button--delete">Delete</button>
 
     </div>

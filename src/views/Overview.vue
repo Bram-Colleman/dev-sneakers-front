@@ -102,7 +102,9 @@ function deleteShoe(id) {
 function toggleStatusEdit() {
   statusEdit.value = !statusEdit.value;
 }
- 
+ function update() {
+  getOrders();
+ }
 
 onMounted(() => {
   getInfo();
@@ -129,8 +131,8 @@ let logout = () => {
     <h1 v-else>My Orders</h1>
     <div class="order_list">
       <ul class="orders">
-        <li v-for="(order, index) in orders" :key="order._id" :order="order" :index="index" :edit="false">
-          <OrderCard :order="order" :admin="isAdmin" @deleteShoe="deleteShoe(order._id)"></OrderCard>
+        <li v-for="(order, index) in orders" :key="order" :order="order" :index="index" :edit="false">
+          <OrderCard :order="order" :admin="isAdmin" @deleteShoe="deleteShoe(order._id)" @updateShoe="update"></OrderCard>
         </li>
       </ul>
     </div>
