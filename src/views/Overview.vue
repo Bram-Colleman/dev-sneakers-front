@@ -4,6 +4,8 @@ import { ref, onMounted } from "vue";
 let userName = localStorage.getItem("userName");
 let userEmail = "";
 let isAdmin = "";
+let statusEdit = ref(false);
+let statusSelected = ref("");
 const orders = ref();
 function getInfo() {
   try {
@@ -73,6 +75,35 @@ function deleteShoe(id) {
     }
   }
 
+  function updateStatusOrder(id) {
+    try {
+      fetch(`http://localhost:3000/api/v1/shoes/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          status: statusSelected.value,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === "success") {
+            getOrders();
+          } else {
+            console.log(data);
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
+}
+function toggleStatusEdit() {
+  statusEdit.value = !statusEdit.value;
+}
+ 
+
 onMounted(() => {
   getInfo();
   getOrders();
@@ -94,7 +125,7 @@ let logout = () => {
 
   <h1 class="name">Hi, {{ userName }}</h1>
   <div class="overview__item">
-    <h1>My Orders</h1>
+    <h1>My Orders</h1><span class="status__edit" @click="toggleStatusEdit" v-if="isAdmin">edit</span>
     <div class="order_list">
       <ul class="orders">
         <li v-for="order in orders">
@@ -130,9 +161,15 @@ let logout = () => {
               <div v-if="order.shoeColorSole == '#69FF47'" style="background-color: #69ff47" class="orderColor"></div>
             </div>
           </div>
-          <p>{{ order.status }}</p>
-
+          <p class="status">{{ order.status }}</p>
+          <div v-if="statusEdit">
+            <select name="" id="" class="status__select" v-model="statusSelected">
+              <option value="Sent">Sent</option>
+              <option value="In progress">In progress</option>
+            </select>
+            <span @click="updateStatusOrder(order._id)">confirm</span>
             <button @click="deleteShoe(order._id)" v-if="isAdmin">Delete</button>
+          </div>
         </li>
       </ul>
     </div>
@@ -203,6 +240,16 @@ li {
 }
 .part span {
   width: 4rem;
+}
+.status {
+  display: flex;
+  justify-content: space-between;
+}
+.status__edit {
+  text-decoration: underline;
+}
+.status__select {
+  display: flex;
 }
 
 @media (max-width: 950px) {
