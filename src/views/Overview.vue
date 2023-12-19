@@ -26,6 +26,28 @@ function getOrders() {
   }
 }
 
+function deleteShoe(id) {
+    try {
+      fetch(`https://dev5-sneaker-api.onrender.com/api/v1/shoes/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === "success") {
+            getOrders();
+          } else {
+            console.log("error");
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 onMounted(() => {
   getOrders();
 });
@@ -83,6 +105,8 @@ let logout = () => {
             </div>
           </div>
           <p>{{ order.status }}</p>
+
+            <button @click="deleteShoe(order._id)">Delete</button>
         </li>
       </ul>
     </div>
