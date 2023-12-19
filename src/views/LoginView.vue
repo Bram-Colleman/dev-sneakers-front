@@ -78,7 +78,6 @@ onMounted(() => {
     justify-content: flex-end;
     padding: 0 2rem;
     background-color: #69FF47;
-
   }
   a {
     color: black;
@@ -97,7 +96,6 @@ onMounted(() => {
     justify-content: center;
     margin: 0 auto;
     width: 100%;
-    height: 100%;
     margin-bottom: 5rem;
     flex-grow: 1; 
 
