@@ -13,6 +13,7 @@
     "gsap": "^3.12.4",
     "howler": "^2.2.4",
     "orbit-controls": "^1.2.4",
+    "primus-client": "^7.3.4",
     "three": "^0.159.0",
     "tween": "^0.9.0",
     "tween.js": "^16.6.0",

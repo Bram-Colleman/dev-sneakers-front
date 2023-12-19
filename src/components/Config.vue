@@ -714,6 +714,7 @@ export default {
             console.error("Something went wrong!");
           }
         });
+        
   },
 
   methods: {
@@ -765,7 +766,7 @@ export default {
           shoeColorPanelUp: this.selectedColors.shoeColorPanelUp,
           shoeMaterialPanelDown: this.selectedMaterials.shoeMaterialPanelDown,
           shoeMaterialPanelUp: this.selectedMaterials.shoeMaterialPanelUp,
-          jewel: this.jewel,
+          jewel: this.jewel || "none",
           initials: this.initials,
           status: "Order placed",
           userName: this.userName,
@@ -788,13 +789,23 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           if (data.status === "success") {
+            let socket = Primus.connect("http://localhost:3000/", {
+              reconnect: {
+              max: Infinity, // Number: The max delay before we try to reconnect.
+              min: 500, // Number: The minimum delay before we try reconnect.
+              retries: 10, // Number: How many times we should try to reconnect.
+              },
+            });
+            socket.write({
+              "action": "create",
+            });
             if (localStorage.getItem("token")) {
               window.location.href = "/overview";
             } else {
               this.orderConfirmed = true;
             }
           } else {
-            console.error("Something went wrong!");
+            console.error(data);
           }
         });
     },

@@ -3,12 +3,31 @@ import { ref, onMounted } from "vue";
 import OrderCard from "@/components/OrderCard.vue";
 
 
+
 let userName = localStorage.getItem("userName");
 let userEmail = "";
 let isAdmin = "";
 let statusEdit = ref(false);
 let statusSelected = ref("");
 const orders = ref();
+
+let socket = Primus.connect("http://localhost:3000/", {
+  reconnect: {
+    max: Infinity, // Number: The max delay before we try to reconnect.
+    min: 500, // Number: The minimum delay before we try reconnect.
+    retries: 10, // Number: How many times we should try to reconnect.
+  },
+});
+
+socket.on("data", (data) => {
+  if (data.action === "delete") {
+    getOrders();
+  }
+  if (data.action === "create") {
+    getOrders();
+  }
+});
+
 function getInfo() {
   try {
   fetch("http://localhost:3000/api/v1/users", {
@@ -67,7 +86,9 @@ function deleteShoe(id) {
         .then((response) => response.json())
         .then((data) => {
           if (data.status === "success") {
-            getOrders();
+            socket.write({
+              "action": "delete",
+            });
           } else {
             console.log("error");
           }
@@ -99,7 +120,7 @@ let logout = () => {
 <template>
   <div class="nav">
     <router-link to="/">Configurator</router-link>
-    <RouterLink class="logout" to="/logout" @click="logout">Logout</RouterLink>
+    <RouterLink class="logout" to="/" @click="logout">Logout</RouterLink>
   </div>
 
   <h1 class="name">Hi, {{ userName }}</h1>
