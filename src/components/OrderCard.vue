@@ -22,6 +22,7 @@ socket.on("data", (data) => {
   if (data.action === "update") {
     // props.order.status = data.data.status;
     emits('updateShoe');
+    return;
   }
 
 });
